@@ -22,9 +22,12 @@ def main() -> None:
     text = REVIEW.strip()
     if not (1 <= len(text) <= 200):
         raise ValueError("review must be 1 to 200 characters, got %d" % len(text))
+    if "\n" in text or "\r" in text:
+        raise ValueError("review must be a single line")
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8", newline="\n") as f:
         f.write(text + "\n")
+    print("wrote /output/entry.txt (%d characters)" % len(text))
 
 
 if __name__ == "__main__":
